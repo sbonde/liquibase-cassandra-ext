@@ -1,4 +1,6 @@
-CREATE TABLE pre_adhoc2 (
+--liquibase formatted sql
+--changeset dbaas:dbaas_2 dbms:cassandra
+CREATE TABLE post_adhoc2 (
       schedule_id int,
       time timestamp,
       value double,

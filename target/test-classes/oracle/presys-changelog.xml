@@ -1,0 +1,20 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+<changeSet id="ora_test1" author="sbobde" runInTransaction="false">
+    <sql>
+		CREATE TABLE BOOK_TEMP1(
+		ID VARCHAR2(36),
+		VERSION NUMBER(22),
+		NAME VARCHAR2(128) NOT NULL,
+		DESCRIPTION VARCHAR2(128) NOT NULL,
+		CREATED_BY VARCHAR2(128),
+		CREATED_AT TIMESTAMP,
+		MODIFIED_BY VARCHAR2(128),
+		MODIFIED_AT TIMESTAMP
+		);
+ </sql>
+ </changeSet>
+</databaseChangeLog>

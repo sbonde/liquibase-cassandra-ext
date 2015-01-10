@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">-->
+<suite name="liquibase-extn">
+
+	<test verbose="5" name="all">
+		<!--<groups>-->
+			<!--<run>-->
+				<!--<include name="*" />-->
+			<!--</run>-->
+		<!--</groups>-->
+		<classes>
+        </classes>
+	</test>
+</suite>

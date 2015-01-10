@@ -1,4 +1,4 @@
-package liquibase.sqlgenerator.ext;
+package liquibase.sqlgenerator.core;
 
 import java.util.List;
 
@@ -23,13 +23,18 @@ import liquibase.util.StringUtils;
 /**
  * @author Sanjay Bonde
  */
-public class CustomMarkChangeSetRanGenerator extends MarkChangeSetRanGenerator {
+public class MarkChangeSetRanGeneratorCassandra extends MarkChangeSetRanGenerator {
 
     @Override
     public int getPriority() {
         return PRIORITY_DATABASE;
     }
 
+    @Override
+    public boolean supports(MarkChangeSetRanStatement statement, Database database) {
+        return database instanceof CassandraDatabase;
+    }
+    
     @Override
 	public Sql[] generateSql(MarkChangeSetRanStatement statement, Database database,
         SqlGeneratorChain sqlGeneratorChain) {

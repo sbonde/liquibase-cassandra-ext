@@ -13,18 +13,21 @@ import liquibase.statement.core.DeleteStatement;
 import liquibase.statement.core.InitializeDatabaseChangeLogLockTableStatement;
 import liquibase.statement.core.InsertStatement;
 
-public class CustomInitializeDatabaseChangeLogLockTableGenerator extends InitializeDatabaseChangeLogLockTableGenerator{
+public class InitializeDatabaseChangeLogLockTableGeneratorCassandra extends InitializeDatabaseChangeLogLockTableGenerator{
 
-    @Override
+	@Override
     public int getPriority() {
         return PRIORITY_DATABASE;
     }
 	 
 	@Override
-    public Sql[] generateSql(InitializeDatabaseChangeLogLockTableStatement statement, Database database, SqlGeneratorChain sqlGeneratorChain) {
-		if(!(database instanceof CassandraDatabase)){
-			return super.generateSql(statement, database, sqlGeneratorChain);
-		}
+    public boolean supports(InitializeDatabaseChangeLogLockTableStatement statement, Database database) {
+        return database instanceof CassandraDatabase;
+    }
+
+    public Sql[] generateSql(
+			InitializeDatabaseChangeLogLockTableStatement statement,
+			Database database, SqlGeneratorChain sqlGeneratorChain) {
 	    DeleteStatement deleteStatement = new DeleteStatement(database.getLiquibaseCatalogName(), database.getLiquibaseSchemaName(), database.getDatabaseChangeLogLockTableName());
         deleteStatement.setWhere("ID = 1");
         InsertStatement insertStatement = new InsertStatement(database.getLiquibaseCatalogName(), database.getLiquibaseSchemaName(), database.getDatabaseChangeLogLockTableName())
@@ -37,5 +40,6 @@ public class CustomInitializeDatabaseChangeLogLockTableGenerator extends Initial
         sql.addAll(Arrays.asList(SqlGeneratorFactory.getInstance().generateSql(insertStatement, database)));
 
         return sql.toArray(new Sql[sql.size()]);
-    }
+	}
+
 }

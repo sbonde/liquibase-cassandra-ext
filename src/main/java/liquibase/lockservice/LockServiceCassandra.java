@@ -9,21 +9,17 @@ import liquibase.exception.UnexpectedLiquibaseException;
 import liquibase.executor.Executor;
 import liquibase.executor.ExecutorService;
 import liquibase.logging.LogFactory;
-import liquibase.snapshot.SnapshotGeneratorFactory;
 import liquibase.statement.SqlStatement;
 import liquibase.statement.core.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class CustomLockService extends StandardLockService {
+public class LockServiceCassandra extends StandardLockService {
 
-	private Database database;
-	
-    private boolean hasChangeLogLock = false;
-	
-    public CustomLockService() {
+    public LockServiceCassandra() {
     	super();
     }
 
@@ -33,26 +29,16 @@ public class CustomLockService extends StandardLockService {
     }
 
     @Override
-    public void setDatabase(Database database) {
-    	super.setDatabase(database);
-        this.database = database;
-    }
-
-    @Override
-    public boolean hasChangeLogLock() {
-        return super.hasChangeLogLock() || hasChangeLogLock;
+    public boolean supports(Database database) {
+        return database instanceof CassandraDatabase;
     }
 
     @Override
     public boolean hasDatabaseChangeLogLockTable() throws DatabaseException {
         boolean hasTable = false;
         try {
-        	if(!(database instanceof CassandraDatabase)) {
-        		hasTable = SnapshotGeneratorFactory.getInstance().hasDatabaseChangeLogLockTable(database);
-        	}else {
-        		CassandraDatabase cassandraDatabase = (CassandraDatabase)database;
-        		hasTable = cassandraDatabase.hasDatabaseChangeLogLockTable();
-        	}
+    		CassandraDatabase cassandraDatabase = (CassandraDatabase)database;
+    		hasTable = cassandraDatabase.hasDatabaseChangeLogLockTable();
         } catch (LiquibaseException e) {
             throw new UnexpectedLiquibaseException(e);
         }
@@ -61,9 +47,6 @@ public class CustomLockService extends StandardLockService {
 
     @Override
     public boolean acquireLock() throws LockException {
-    	if(!(database instanceof CassandraDatabase)) {
-    		return super.acquireLock();
-    	}
     	if(hasChangeLogLock()) {
     		return true;
     	}
@@ -109,9 +92,6 @@ public class CustomLockService extends StandardLockService {
     
     @Override
     public void releaseLock() throws LockException {
-    	if(!(database instanceof CassandraDatabase)) {
-    		super.releaseLock();
-    	}
         Executor executor = ExecutorService.getInstance().getExecutor(database);
         try {
             if (this.hasDatabaseChangeLogLockTable()) {

@@ -1,4 +1,4 @@
-CREATE TABLE pre_adhoc2 (
+CREATE TABLE pre_adhoc1 (
       schedule_id int,
       time timestamp,
       value double,

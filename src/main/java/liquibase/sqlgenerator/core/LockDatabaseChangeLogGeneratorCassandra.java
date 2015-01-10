@@ -8,13 +8,17 @@ import liquibase.sqlgenerator.SqlGeneratorFactory;
 import liquibase.statement.core.LockDatabaseChangeLogStatement;
 import liquibase.statement.core.UpdateStatement;
 
-public class CustomLockDatabaseChangeLogGenerator extends LockDatabaseChangeLogGenerator {
+public class LockDatabaseChangeLogGeneratorCassandra extends LockDatabaseChangeLogGenerator {
 
     @Override
     public int getPriority() {
         return PRIORITY_DATABASE;
     }
-
+    
+    public boolean supports(LockDatabaseChangeLogStatement statement, Database database) {
+        return database instanceof CassandraDatabase;
+    }
+    
     @Override
     public Sql[] generateSql(LockDatabaseChangeLogStatement statement, Database database, SqlGeneratorChain sqlGeneratorChain) {
     	if(!(database instanceof CassandraDatabase)) {

@@ -1,4 +1,4 @@
-package liquibase.sqlgenerator.ext;
+package liquibase.sqlgenerator.core;
 
 import java.util.Map;
 
@@ -24,13 +24,18 @@ import liquibase.statement.core.CreateTableStatement;
 /**
  * @author Sanjay Bonde
  */
-public class CustomCreateTableGenerator extends CreateTableGenerator  {
+public class CreateTableGeneratorCassandra extends CreateTableGenerator  {
 
     @Override
     public int getPriority() {
         return PRIORITY_DATABASE;
     }
 
+    @Override
+    public boolean supports(CreateTableStatement statement, Database database) {
+        return database instanceof CassandraDatabase;
+    }
+    
     @Override
 	public Sql[] generateSql(CreateTableStatement statement, Database database, SqlGeneratorChain sqlGeneratorChain) {
     	if(!(database instanceof CassandraDatabase)) {
