@@ -38,9 +38,6 @@ public class MarkChangeSetRanGeneratorCassandra extends MarkChangeSetRanGenerato
     @Override
 	public Sql[] generateSql(MarkChangeSetRanStatement statement, Database database,
         SqlGeneratorChain sqlGeneratorChain) {
-     	if(!(database instanceof CassandraDatabase)) {
-    		return super.generateSql(statement, database, sqlGeneratorChain);
-    	}
      	String dateValue = new java.sql.Date(System.currentTimeMillis()).toString();
 
         ChangeSet changeSet = statement.getChangeSet();

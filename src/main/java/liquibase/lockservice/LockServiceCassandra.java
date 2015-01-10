@@ -131,9 +131,6 @@ public class LockServiceCassandra extends StandardLockService {
 	@Override
     public DatabaseChangeLogLock[] listLocks() throws LockException {
         try {
-        	if(!(database instanceof CassandraDatabase)) {
-        		return super.listLocks();
-        	}
             if (!this.hasDatabaseChangeLogLockTable()) {
                 return new DatabaseChangeLogLock[0];
             }

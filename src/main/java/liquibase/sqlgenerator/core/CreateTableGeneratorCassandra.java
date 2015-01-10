@@ -38,9 +38,6 @@ public class CreateTableGeneratorCassandra extends CreateTableGenerator  {
     
     @Override
 	public Sql[] generateSql(CreateTableStatement statement, Database database, SqlGeneratorChain sqlGeneratorChain) {
-    	if(!(database instanceof CassandraDatabase)) {
-    		return super.generateSql(statement, database, sqlGeneratorChain);
-    	}
         StringBuilder sql = new StringBuilder("CREATE TABLE ")
             .append(statement.getSchemaName())
             .append(".")

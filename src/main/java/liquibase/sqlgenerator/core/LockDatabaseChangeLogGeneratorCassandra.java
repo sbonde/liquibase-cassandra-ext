@@ -21,9 +21,6 @@ public class LockDatabaseChangeLogGeneratorCassandra extends LockDatabaseChangeL
     
     @Override
     public Sql[] generateSql(LockDatabaseChangeLogStatement statement, Database database, SqlGeneratorChain sqlGeneratorChain) {
-    	if(!(database instanceof CassandraDatabase)) {
-    		return super.generateSql(statement, database, sqlGeneratorChain);
-    	}
     	String liquibaseSchema = database.getLiquibaseSchemaName();
         String liquibaseCatalog = database.getLiquibaseCatalogName();
         UpdateStatement updateStatement = new UpdateStatement(liquibaseCatalog, liquibaseSchema, database.getDatabaseChangeLogLockTableName());

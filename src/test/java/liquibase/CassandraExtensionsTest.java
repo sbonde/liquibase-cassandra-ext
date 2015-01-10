@@ -77,8 +77,7 @@ public class CassandraExtensionsTest {
 	@Test
 	public void runLiquibaseTag() throws Exception {
 		LockServiceFactory.getInstance().register(new LockServiceCassandra());
-		//Database database = LiquibaseExtensionUtil.createCassandraDatabase("10.227.67.201","9160","dbaasuser");
-		Database database = LiquibaseExtensionUtil.createCassandraDatabase("10.227.67.201","9160","dbaasuser");
+		Database database = LiquibaseExtensionUtil.createCassandraDatabase("localhost","9160","dbaasuser");
 		assertNotNull(database.getConnection());
 
 		File basedir = new File(System.getProperty("user.dir"));
@@ -98,9 +97,7 @@ public class CassandraExtensionsTest {
 	@Test
 	public void update() throws Exception {
 		LockServiceFactory.getInstance().register(new LockServiceCassandra());
-		//String host = "10.242.175.58";
-		String host = "10.242.175.26";
-		//String host = "localhost";
+		String host = "localhost";
 		
 		Database database = LiquibaseExtensionUtil.createCassandraDatabase(host, "9160", "dbaasuser");
 		assertNotNull(database.getConnection());
@@ -133,7 +130,7 @@ public class CassandraExtensionsTest {
 	@Test
 	public void clearCheckSums() throws Exception {
 		LockServiceFactory.getInstance().register(new LockServiceCassandra());
-		Database database = LiquibaseExtensionUtil.createCassandraDatabase("10.242.175.58", "9160", "global_store_orders");
+		Database database = LiquibaseExtensionUtil.createCassandraDatabase("localhost", "9160", "global_store_orders");
 		assertNotNull(database.getConnection());
 
 		File basedir = new File(System.getProperty("user.dir"));

@@ -21,7 +21,7 @@ public class OracleProvisionTest {
 
 	@Test
 	public void runLiquibase() throws Exception {
-		Database database = createDatabase("dbaasuser");
+		Database database = createDatabase("bookstore");
 		assertNotNull(database.getConnection());
 
 		//File basedir = new File(System.getProperty("project.basedir"));
@@ -42,9 +42,9 @@ public class OracleProvisionTest {
 
 	private Database createDatabase(String schema) throws Exception {
 		
-		String url = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.227.64.117)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=oradb_ops.gecwalmart.com)))";
-		String username = "dbaasuser";
-		String password = "pangaea";
+		String url = "jdbc:oracle:thin:@localhost:1521/bookstore";
+		String username = "bookstore";
+		String password = "bookstore_p";
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String databaseClass = "liquibase.database.core.OracleDatabase";
 		String defaultCatalog = "";
